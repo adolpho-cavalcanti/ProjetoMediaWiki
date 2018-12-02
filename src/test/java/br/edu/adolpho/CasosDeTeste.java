@@ -9,9 +9,12 @@ package br.edu.adolpho;
 import br.edu.adolpho.po.CreateAccountPage;
 import br.edu.adolpho.po.ContributionsPage;
 import br.edu.adolpho.po.DiscussionPage;
+import br.edu.adolpho.po.ForgotPassword;
 import br.edu.adolpho.po.InfoCreateAccountPage;
 import br.edu.adolpho.po.LoginPage;
+import br.edu.adolpho.po.Logout;
 import br.edu.adolpho.po.MainPage;
+import br.edu.adolpho.po.MediaFAQ;
 import br.edu.adolpho.po.PreferencesPage;
 import br.edu.adolpho.po.TalkPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -76,31 +79,31 @@ public class CasosDeTeste {
         MainPage mainPage = new MainPage(driver);
         
         CreateAccountPage criaConta = mainPage.getNavigation().goToCreateAccountPage();
-
-        CreateAccountPage infoCria = criaConta.setUser("santos18").setPass("pass12").setConfirmPass("pass12").setCreateYourAccount();
-        
+                                                                                    //senha123
+        CreateAccountPage infoCria = criaConta.setUser("elninocavalcanti10").setPass("pass12").setConfirmPass("pass12").setCreateYourAccount();
+                    
         takeScreenShot();
-        assertThat(driver.findElement(By.tagName("h1")).getText(),containsString("Welcome, Santos18!"));
+        assertThat(driver.findElement(By.tagName("h1")).getText(),containsString("Welcome, Elninocavalcanti10!"));
     }
     
     @Test
     public void CT2testFazerLogin() {
         MainPage mainPage = new MainPage(driver);
        
-        LoginPage login = mainPage.getNavigation().goToLoginPage().setUser("santos11").setPass("pass12").setLogin();
+        LoginPage login = mainPage.getNavigation().goToLoginPage().setUser("elninocavalcanti10").setPass("pass12").setLogin();
         
-        assertThat(driver.findElement(By.cssSelector("#pt-userpage > a")).getText(),containsString("Santos11"));
+        assertThat(driver.findElement(By.cssSelector("#pt-userpage > a")).getText(),containsString("Elninocavalcanti10"));
         takeScreenShot();
         
-    }    
+    }   
     
     @Test
     public void CT3testFazerLogout() {
         MainPage mainPage = new MainPage(driver);
         
-        LoginPage login = mainPage.getNavigation().goToLoginPage().setUser("santos11").setPass("pass12").setLogin();
+        LoginPage login = mainPage.getNavigation().goToLoginPage().setUser("elninocavalcanti10").setPass("pass12").setLogin();
         
-        driver.findElement(By.xpath("//*[@id=\"pt-logout\"]/a")).click();
+        Logout logout = mainPage.getNavigation().goToLogout();
         
         assertThat(driver.findElement(By.tagName("h1")).getText(),containsString("Log out"));
         takeScreenShot();
@@ -115,68 +118,68 @@ public class CasosDeTeste {
         takeScreenShot();
         LoginPage login = mainPage.getNavigation().goToLoginPage();
         takeScreenShot();
-        //Clica no link "Forgot your password?"
-        driver.findElement(By.xpath("//*[@id=\"userloginForm\"]/form/div/div[6]/div/a")).click();
-        takeScreenShot();
-        //Preenche o campo com nome de usuário e fornece um email para recuperação de senha
-        driver.findElement(By.xpath("//*[@id=\"ooui-php-1\"]")).sendKeys("santos11");
-        driver.findElement(By.xpath("//*[@id=\"ooui-php-2\"]")).sendKeys("adolphon@alunos.utfpr.edu.br");
-        takeScreenShot();
-        //Clica no botão reset password
-        driver.findElement(By.xpath("//*[@id=\"ooui-php-5\"]/button/span[2]")).click();
+        
+        //Clica no link "Forgot your password?", depois seta os valores definidos na primeira fase do projeto
+        ForgotPassword fgotPass = mainPage.getNavigation().goToForgotPassword()
+                .setUser("elninocavalcanti10")
+                .setEmail("acn2011@outlook.com")
+                .setReset();
+        
         takeScreenShot();
         assertThat(driver.findElement(By.cssSelector("#mw-content-text > div > form > div.mw-htmlform-ooui-header.mw-htmlform-ooui-header-errors.oo-ui-layout.oo-ui-fieldLayout.oo-ui-fieldLayout-align-top > ul > li > label"))
-                .getText(),containsString("There is no email address recorded for user \"Santos11\"."));
+                .getText(),containsString("There is no email address recorded for user \"Elninocavalcanti10\"."));
         takeScreenShot();
         
-    }
+    }  
     
     @Test
     public void CT5EditarTopicoConversa() {
         MainPage mainPage = new MainPage(driver);
         
         LoginPage login = mainPage.getNavigation().goToLoginPage()
-                .setUser("santos11")
+                .setUser("elninocavalcanti10")
                 .setPass("pass12")
                 .setLogin();
       
-        TalkPage tp = mainPage.getNavigation().goToTalkPage();
-        
-        //clicar em edit
-        driver.findElement(By.xpath("//*[@id=\"mw-content-text\"]/div/h2/span[2]/a")).click();
-        //preencher com futebol total
-        driver.findElement(By.xpath("//*[@id=\"wpTextbox1\"]")).sendKeys("== Futebol Total ==");
-        //save
-        driver.findElement(By.xpath("//*[@id=\"wpSave\"]")).click();
-        
-        assertThat(driver.findElement(By.cssSelector("#Futebol_Total")).getText(),containsString("Futebol Total"));
+        TalkPage tp = mainPage.getNavigation().goToTalkPage()
+                .setEditTopic()
+                .setPreencheCampo("Futebol Total")
+                .setChange()
+                .setViewHistory();
+               
+        assertThat(driver.findElement(By.tagName("h1"))
+                .getText(),containsString("Revision history of \"User talk:Elninocavalcanti10\""));
 
         takeScreenShot();
         
-    }
+    } 
     
     @Test
     public void CT6MudarIdioma() {
         MainPage mainPage = new MainPage(driver);
         
         LoginPage login = mainPage.getNavigation().goToLoginPage()
-                .setUser("santos11")
+                .setUser("elninocavalcanti10")
                 .setPass("pass12")
                 .setLogin();
       
-        PreferencesPage pp = mainPage.getNavigation().goToPreferencesPage();
+        PreferencesPage pp = mainPage.getNavigation().goToPreferencesPage()
+                .setCliqLang()
+                .setSelecLangEsp()
+                .setSaveLang();
         
-        //clicar em language
-        driver.findElement(By.xpath("//*[@id=\"mw-input-wplanguage\"]")).click();
-        //Selecionar língua espanhola
-        driver.findElement(By.xpath("//*[@id=\"mw-input-wplanguage\"]/option[99]")).click();
-        
-        //save
-        driver.findElement(By.xpath("//*[@id=\"prefcontrol\"]")).click();
-        
-        assertThat(driver.findElement(By.tagName("h1")).getText(),containsString("Preferencias"));
+        assertThat(driver.findElement(By.tagName("h1")).getText(),containsString("Preferencias")); 
         takeScreenShot();
-    }
+       
+//Voltando para o idioma inglês, como solicitado na correção da fase1 deste projeto.
+        PreferencesPage VoltarIdiomaEnglish = mainPage.getNavigation().goToPreferencesPage()
+                .setCliqLang()
+                .setSelecLangEng()
+                .setSaveLang();
+       
+        //assertThat(driver.findElement(By.tagName("h1")).getText(),containsString("Preferences")); 
+       //takeScreenShot(); 
+    } 
     
     //Este teste tem um bug de mensagem após fazer a inserção do email, ele retorna uma mensagem de erro,
     //porém, faz a inserção do e-mail, isso pode ser observado ao entrar em preferences com o usuário logado no sistema.
@@ -185,104 +188,78 @@ public class CasosDeTeste {
         MainPage mainPage = new MainPage(driver);
         
         LoginPage login = mainPage.getNavigation().goToLoginPage()
-                .setUser("santos17")
+                .setUser("elninocavalcanti10")
                 .setPass("pass12")
                 .setLogin();
       
-        PreferencesPage pp = mainPage.getNavigation().goToPreferencesPage();
-        
-        //Set an email address
-        driver.findElement(By.xpath("//*[@id=\"mw-htmlform-email\"]/tbody/tr[1]/td[2]/a")).click();
-        //Preencher o campo com o email
-        
-        driver.findElement(By.xpath("//*[@id=\"ooui-php-1\"]")).sendKeys("adolphon@alunos.utfpr.edu.br");
-        
-        //Change email
-        driver.findElement(By.xpath("//*[@id=\"ooui-php-7\"]/button/span[2]")).click();
-        
+        PreferencesPage pp = mainPage.getNavigation().goToPreferencesPage()
+                .setSetEmail()
+                .setPreencheEmail("acn2011@outlook.com")
+                .setChangeEmail();
+     
         assertThat(driver.findElement(By.cssSelector("#mw-changeemail-form > div.mw-htmlform-ooui-header.mw-htmlform-ooui-header-errors.oo-ui-layout.oo-ui-fieldLayout.oo-ui-fieldLayout-align-top > ul > li"))
                 .getText(),containsString("Unknown error in PHP's mail() function."));
         takeScreenShot();
-    }
+    } 
     
     @Test
     public void CT8CriarUmaDiscussão() {
         MainPage mainPage = new MainPage(driver);
         
         LoginPage login = mainPage.getNavigation().goToLoginPage()
-                .setUser("santos12")
+                .setUser("elninocavalcanti10")
                 .setPass("pass12")
                 .setLogin();
       
-        DiscussionPage pp = mainPage.getNavigation().goToDiscussionPage();
+        DiscussionPage pp = mainPage.getNavigation().goToDiscussionPage()
+                .setAddTema()
+                .setPreencheTitulo("Temas novos")
+                .setConteudo("Esse é o novo tema")
+                .setSaveTema();
         
-        //Adicionar Tema
-        driver.findElement(By.xpath("//*[@id=\"ca-addsection\"]/span/a")).click();
-        //Preencher o título
-        driver.findElement(By.xpath("//*[@id=\"wpSummary\"]")).sendKeys("Temas novos");
-        
-        driver.findElement(By.xpath("//*[@id=\"wpTextbox1\"]")).sendKeys("Temas novos conteudo");
-        
-        driver.findElement(By.xpath("//*[@id=\"wpSave\"]")).click();
-        
-        
-        assertThat(driver.findElement(By.cssSelector("#Temas_novos"))
-               .getText(),containsString("Temas novos"));
+        assertThat(driver.findElement(By.cssSelector("#mw-content-text > div > p:nth-child(1)"))
+               .getText(),containsString("Esse é o novo tema"));
         takeScreenShot();
     }
     
+    
+    
     //Este caso de teste requer trocar o xpath do que será oculto, pois uma vez que este teste passou,
     //o elemento está oculto. Caso queira fazer este teste passar, favor pegar o novo xpath dos itens 1 e 2 que
-    //estão comentados.
+    //estão comentados na classe DiscussionPege.
     @Test
-    public void CT9Ocultar() {
+    public void CT9OcultarTemas() {
         MainPage mainPage = new MainPage(driver);
         
         //media FAQ
-        driver.findElement(By.xpath("//*[@id=\"mw-content-text\"]/div/ul/li[2]/a")).click();
+        MediaFAQ faq = mainPage.getNavigation().goToMediaFaq();
+        takeScreenShot();
         
         LoginPage login = mainPage.getNavigation().goToLoginPage()
-                .setUser("utfpr")
-                .setPass("pass12")
+                .setUser("elninocavalcanti10")
+                .setPass("senha123")
                 .setLogin();
       
-        DiscussionPage dp = mainPage.getNavigation().goToDiscussionPage();
+        DiscussionPage dp = mainPage.getNavigation().goToDiscussionPage()
+                .setTresPont().setOcultarTema().setMotivo("sem motivos").setaOcultar();
        
-        //Item 1- clicar no 3 pontinhos ...
-        driver.findElement(By.xpath("//*[@id=\"flow-topic-ucb0syjm6ogxxkle\"]/div[1]/div[4]/div/a/span")).click();
-            
-        //Item 2- clicar em ocultar tema
-        driver.findElement(By.xpath("//*[@id=\"flow-topic-ucb0syjm6ogxxkle\"]/div[1]/div[4]/ul/section[2]/li/a"))
-                .click(); 
-        //motivo de ocultar tema
-        driver.findElement(By.xpath("/html/body/div[8]/div/div[2]/form/input[2]"))
-                .sendKeys("sem motivos");
-        //clicar botão ocultar
-        driver.findElement(By.xpath("/html/body/div[8]/div/div[2]/form/div[2]/button")).click();
-        
         assertThat(driver.findElement(By.tagName("h1")).getText(),containsString("Manual talk:FAQ"));
-        takeScreenShot();
+        takeScreenShot(); 
     }
+    
     
     @Test
     public void CT10PesquisarContribuicoes() {
         MainPage mainPage = new MainPage(driver);
         
         LoginPage login = mainPage.getNavigation().goToLoginPage()
-                .setUser("santos13")
+                .setUser("elninocavalcanti10")
                 .setPass("pass12")
                 .setLogin();
       
-        ContributionsPage cp = mainPage.getNavigation().goToContributionsPage();
-        
-        //Pesquisar usuário
-        driver.findElement(By.xpath("//*[@id=\"mw-content-text\"]/form/fieldset/div[1]/input[3]"))
-                .clear();
-        driver.findElement(By.xpath("//*[@id=\"mw-content-text\"]/form/fieldset/div[1]/input[3]"))
-                .sendKeys("Santos11");
-        //clicar botão search
-        driver.findElement(By.xpath("//*[@id=\"mw-content-text\"]/form/fieldset/div[6]/input")).click();
-        
+        ContributionsPage cp = mainPage.getNavigation().goToContributionsPage()
+                .setPesqUser("elninocavalcanti10")
+                .setSearch();
         
         assertThat(driver.findElement(By.tagName("h1")).getText(),containsString("User contributions"));
         takeScreenShot();

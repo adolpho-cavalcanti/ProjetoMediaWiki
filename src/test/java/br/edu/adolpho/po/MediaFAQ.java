@@ -4,26 +4,19 @@
  * and open the template in the editor.
  */
 package br.edu.adolpho.po;
-import org.openqa.selenium.By;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
 /**
  *
  * @author Criação
  */
-public class Logout extends MediaWikiPage{
-    
-   // @FindBy(xpath = "//*[@id=\"pt-logout\"]/a")
-   // WebElement logout;
-    
-    public Logout(WebDriver driver) {
+public class MediaFAQ extends MediaWikiPage{
+   
+    public MediaFAQ (WebDriver driver) {
         super(driver);
     }
-    
-    //public Logout setLogout() {
-       // logout.click();
-      //  return new Logout(driver);
-    //}
     
 }

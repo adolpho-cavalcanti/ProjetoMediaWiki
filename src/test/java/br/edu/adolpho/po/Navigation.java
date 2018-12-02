@@ -17,11 +17,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public class Navigation extends BasePage{
     
-    @FindBy(css = "#pt-mytalk > a")
+    @FindBy(xpath = "//*[@id=\"pt-mytalk\"]/a")
     WebElement talk;
     
     @FindBy(css = "#pt-mycontris > a")
-    private WebElement contributions;
+    WebElement contributions;
     
     @FindBy(css = "#pt-createaccount > a")
     WebElement createAccount;
@@ -29,14 +29,23 @@ public class Navigation extends BasePage{
     @FindBy(css = "#pt-login > a")
     WebElement login;
     
+    @FindBy(xpath = "//*[@id=\"pt-logout\"]/a")
+    WebElement logout;
+    
     @FindBy(css = "#pt-preferences > a")
     WebElement preferences;
     
     @FindBy(css = "#ca-talk > span > a")
     WebElement discussion;
     
+    @FindBy(xpath = "//*[@id=\"userloginForm\"]/form/div/div[6]/div/a")
+    WebElement forgotPass;
+    
     @FindBy(css = "#p-personal")
     WebElement menuButton;
+    
+    @FindBy(xpath = "//*[@id=\"mw-content-text\"]/div/ul/li[2]/a")
+    WebElement mediaFaq;
     
     public Navigation(WebDriver driver) {
         super(driver);
@@ -62,6 +71,11 @@ public class Navigation extends BasePage{
         return new LoginPage(driver);
     }
     
+    public Logout goToLogout() {
+        clickMenuOption(logout);
+        return new Logout(driver);
+    }
+    
     public PreferencesPage goToPreferencesPage() {
         clickMenuOption(preferences);
         return new PreferencesPage(driver);
@@ -70,6 +84,16 @@ public class Navigation extends BasePage{
     public DiscussionPage goToDiscussionPage() {
         clickMenuOption(discussion);
         return new DiscussionPage(driver);
+    }
+    
+    public ForgotPassword goToForgotPassword() {
+        clickMenuOption(forgotPass);
+        return new ForgotPassword(driver);
+    }
+    
+    public MediaFAQ goToMediaFaq() {
+        clickMenuOption(mediaFaq);
+        return new MediaFAQ(driver);
     }
     
     private void clickMenuOption(WebElement menuOption) {

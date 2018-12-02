@@ -6,6 +6,8 @@
 package br.edu.adolpho.po;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
  *
@@ -13,8 +15,25 @@ import org.openqa.selenium.WebDriver;
  */
 public class ContributionsPage extends MediaWikiPage{
 
-    ContributionsPage(WebDriver driver) {
+    @FindBy(xpath = "//*[@id=\"mw-content-text\"]/form/fieldset/div[1]/input[3]")
+    WebElement pesqUser;
+    
+    @FindBy(xpath = "//*[@id=\"mw-content-text\"]/form/fieldset/div[6]/input")
+    WebElement search;
+
+    public ContributionsPage(WebDriver driver) {
         super(driver);
+    }
+    
+    public ContributionsPage setPesqUser(String userName) {
+        pesqUser.clear();
+        pesqUser.sendKeys(userName);
+        return new ContributionsPage(driver);
+    }
+    
+     public ContributionsPage setSearch() {
+        search.click();
+        return new ContributionsPage(driver);
     }
     
 }

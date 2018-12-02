@@ -15,7 +15,7 @@ public class MainPage extends MediaWikiPage{
     
     public MainPage(WebDriver driver) {
         super(driver);
-        driver.get("http://192.168.0.129/");
+        driver.get("http://192.168.2.103/");
     }
     
 }
