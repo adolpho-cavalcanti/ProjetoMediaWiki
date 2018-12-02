@@ -73,15 +73,15 @@ public class CasosDeTeste {
             FileUtils.copyFile(sourceFile, new File("./res/" + scId + ".png"));
         } catch(IOException e) {}
     }
-    /*
+    
     @Test
     public void CT1testCriarConta() {
         MainPage mainPage = new MainPage(driver);
         
         CreateAccountPage criaConta = mainPage.getNavigation().goToCreateAccountPage()
                                                 .setUser("elninocavalcanti10")
-                                                .setPass("pass12")
-                                                .setConfirmPass("pass12")
+                                                .setPass("senha123")
+                                                .setConfirmPass("senha123")
                                                 .setCreateYourAccount();
                                         //senha123
                     
@@ -95,7 +95,7 @@ public class CasosDeTeste {
        
         LoginPage login = mainPage.getNavigation().goToLoginPage()
                             .setUser("elninocavalcanti10")
-                            .setPass("pass12")
+                            .setPass("senha123")
                             .setLogin();
         
         assertEquals("Elninocavalcanti10", login.getAssertiva());
@@ -107,7 +107,10 @@ public class CasosDeTeste {
     public void CT3testFazerLogout() {
         MainPage mainPage = new MainPage(driver);
         
-        LoginPage login = mainPage.getNavigation().goToLoginPage().setUser("elninocavalcanti10").setPass("pass12").setLogin();
+        LoginPage login = mainPage.getNavigation().goToLoginPage()
+                                        .setUser("elninocavalcanti10")
+                                        .setPass("senha123")
+                                        .setLogin();
         
         Logout logout = mainPage.getNavigation().goToLogout();
         
@@ -127,7 +130,7 @@ public class CasosDeTeste {
         
         //Clica no link "Forgot your password?", depois seta os valores definidos na primeira fase do projeto
         ForgotPassword fgotPass = mainPage.getNavigation().goToForgotPassword()
-                .setUser("elninocavalcanti13")
+                .setUser("elninocavalcanti10")
                 .setEmail("acn2011@outlook.com")
                 .setReset();
         
@@ -141,8 +144,8 @@ public class CasosDeTeste {
         MainPage mainPage = new MainPage(driver);
         
         LoginPage login = mainPage.getNavigation().goToLoginPage()
-                .setUser("elninocavalcanti13")
-                .setPass("pass12")
+                .setUser("elninocavalcanti10")
+                .setPass("senha123")
                 .setLogin();
       
         TalkPage tp = mainPage.getNavigation().goToTalkPage()
@@ -160,8 +163,8 @@ public class CasosDeTeste {
         MainPage mainPage = new MainPage(driver);
         
         LoginPage login = mainPage.getNavigation().goToLoginPage()
-                .setUser("elninocavalcanti13")
-                .setPass("pass12")
+                .setUser("elninocavalcanti10")
+                .setPass("senha123")
                 .setLogin();
       
         PreferencesPage pp = mainPage.getNavigation().goToPreferencesPage()
@@ -189,8 +192,8 @@ public class CasosDeTeste {
         MainPage mainPage = new MainPage(driver);
         
         LoginPage login = mainPage.getNavigation().goToLoginPage()
-                .setUser("elninocavalcanti13")
-                .setPass("pass12")
+                .setUser("elninocavalcanti10")
+                .setPass("senha123")
                 .setLogin();
       
         PreferencesPage pp = mainPage.getNavigation().goToPreferencesPage()
@@ -207,8 +210,8 @@ public class CasosDeTeste {
         MainPage mainPage = new MainPage(driver);
         
         LoginPage login = mainPage.getNavigation().goToLoginPage()
-                .setUser("elninocavalcanti13")
-                .setPass("pass12")
+                .setUser("elninocavalcanti10")
+                .setPass("senha123")
                 .setLogin();
       
         DiscussionPage dp = mainPage.getNavigation().goToDiscussionPage()
@@ -254,18 +257,18 @@ public class CasosDeTeste {
         takeScreenShot(); 
     }
     
-    */
+    
     @Test
     public void CT10PesquisarContribuicoes() {
         MainPage mainPage = new MainPage(driver);
         
         LoginPage login = mainPage.getNavigation().goToLoginPage()
-                .setUser("elninocavalcanti13")
-                .setPass("pass12")
+                .setUser("elninocavalcanti10")
+                .setPass("senha123")
                 .setLogin();
       
         ContributionsPage cp = mainPage.getNavigation().goToContributionsPage()
-                .setPesqUser("elninocavalcanti13")
+                .setPesqUser("elninocavalcanti10")
                 .setSearch();
         
         assertEquals("User contributions", cp.getTitle());
