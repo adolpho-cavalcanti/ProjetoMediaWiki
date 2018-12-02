@@ -41,6 +41,9 @@ public class DiscussionPage extends MediaWikiPage{
     
     @FindBy(xpath = "/html/body/div[8]/div/div[2]/form/div[2]/button")
     WebElement ocultar;
+    
+    @FindBy(css = "#mw-content-text > div > p:nth-child(1)")
+    WebElement assertivaDP;
 
     public DiscussionPage(WebDriver driver) {
         super(driver);
@@ -85,6 +88,10 @@ public class DiscussionPage extends MediaWikiPage{
      public DiscussionPage setaOcultar() {
         ocultar.click();
         return new DiscussionPage(driver);
+    }
+     
+     public String getAssertivaDP() {
+        return assertivaDP.getText();
     }
     
 }

@@ -23,6 +23,9 @@ public class LoginPage extends MediaWikiPage{
     
     @FindBy(css = "#wpLoginAttempt")
     WebElement login;
+    
+    @FindBy(css = "#pt-userpage > a")
+    WebElement assertiva;
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -43,6 +46,10 @@ public class LoginPage extends MediaWikiPage{
      public LoginPage setLogin() {
         login.click();
         return new LoginPage(driver);
+    }
+     
+    public String getAssertiva() {
+        return assertiva.getText();
     }
     
 }

@@ -36,6 +36,9 @@ public class PreferencesPage extends MediaWikiPage{
     
     @FindBy(xpath = "//*[@id=\"ooui-php-7\"]/button/span[2]")
     WebElement changeEmail;
+    
+    @FindBy(css = "#mw-changeemail-form > div.mw-htmlform-ooui-header.mw-htmlform-ooui-header-errors.oo-ui-layout.oo-ui-fieldLayout.oo-ui-fieldLayout-align-top > ul > li")
+    WebElement assertivaPP;
 
     public PreferencesPage(WebDriver driver) {
         super(driver);
@@ -74,5 +77,9 @@ public class PreferencesPage extends MediaWikiPage{
     public PreferencesPage setChangeEmail() {
         changeEmail.click();
         return new PreferencesPage(driver);
+    }
+    
+    public String getAssertivaPP() {
+        return assertivaPP.getText();
     }
 }

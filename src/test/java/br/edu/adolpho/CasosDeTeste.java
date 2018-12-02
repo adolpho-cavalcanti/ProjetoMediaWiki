@@ -78,21 +78,27 @@ public class CasosDeTeste {
     public void CT1testCriarConta() {
         MainPage mainPage = new MainPage(driver);
         
-        CreateAccountPage criaConta = mainPage.getNavigation().goToCreateAccountPage();
-                                                                                    //senha123
-        CreateAccountPage infoCria = criaConta.setUser("elninocavalcanti10").setPass("pass12").setConfirmPass("pass12").setCreateYourAccount();
+        CreateAccountPage criaConta = mainPage.getNavigation().goToCreateAccountPage()
+                                                .setUser("elninocavalcanti13")
+                                                .setPass("pass12")
+                                                .setConfirmPass("pass12")
+                                                .setCreateYourAccount();
+                                        //senha123
                     
+        assertEquals("Welcome, Elninocavalcanti13!", criaConta.getTitle());
         takeScreenShot();
-        assertThat(driver.findElement(By.tagName("h1")).getText(),containsString("Welcome, Elninocavalcanti10!"));
     }
     
     @Test
     public void CT2testFazerLogin() {
         MainPage mainPage = new MainPage(driver);
        
-        LoginPage login = mainPage.getNavigation().goToLoginPage().setUser("elninocavalcanti10").setPass("pass12").setLogin();
+        LoginPage login = mainPage.getNavigation().goToLoginPage()
+                            .setUser("elninocavalcanti13")
+                            .setPass("pass12")
+                            .setLogin();
         
-        assertThat(driver.findElement(By.cssSelector("#pt-userpage > a")).getText(),containsString("Elninocavalcanti10"));
+        assertEquals("Elninocavalcanti13", login.getAssertiva());
         takeScreenShot();
         
     }   
@@ -105,33 +111,31 @@ public class CasosDeTeste {
         
         Logout logout = mainPage.getNavigation().goToLogout();
         
-        assertThat(driver.findElement(By.tagName("h1")).getText(),containsString("Log out"));
+        assertEquals("Log out", logout.getTitle());
         takeScreenShot();
         
     }    
     
+   
     //Este teste faz uma assertiva informando que não exite vinculado a este usuário,
     //que anteriormente foi cadastrado sem uma conta de e-mail vinculada.
     @Test
     public void CT4EsqueceuAsenha() {
         MainPage mainPage = new MainPage(driver);
-        takeScreenShot();
-        LoginPage login = mainPage.getNavigation().goToLoginPage();
-        takeScreenShot();
+       
+        LoginPage login = mainPage.getNavigation().goToLoginPage();      
         
         //Clica no link "Forgot your password?", depois seta os valores definidos na primeira fase do projeto
         ForgotPassword fgotPass = mainPage.getNavigation().goToForgotPassword()
-                .setUser("elninocavalcanti10")
+                .setUser("elninocavalcanti13")
                 .setEmail("acn2011@outlook.com")
                 .setReset();
         
+        assertEquals("There is no email address recorded for user \"Elninocavalcanti13\".", fgotPass.getAssertivaFG());
         takeScreenShot();
-        assertThat(driver.findElement(By.cssSelector("#mw-content-text > div > form > div.mw-htmlform-ooui-header.mw-htmlform-ooui-header-errors.oo-ui-layout.oo-ui-fieldLayout.oo-ui-fieldLayout-align-top > ul > li > label"))
-                .getText(),containsString("There is no email address recorded for user \"Elninocavalcanti10\"."));
-        takeScreenShot();
-        
-    }  
+    }   
     
+    //Lembrando que para editar o tópico é necessário ter criado o tópico previamente.
     @Test
     public void CT5EditarTopicoConversa() {
         MainPage mainPage = new MainPage(driver);
@@ -143,15 +147,12 @@ public class CasosDeTeste {
       
         TalkPage tp = mainPage.getNavigation().goToTalkPage()
                 .setEditTopic()
-                .setPreencheCampo("Futebol Total")
+                .setPreencheCampo("Futebol Total1")
                 .setChange()
                 .setViewHistory();
-               
-        assertThat(driver.findElement(By.tagName("h1"))
-                .getText(),containsString("Revision history of \"User talk:Elninocavalcanti10\""));
-
-        takeScreenShot();
         
+        assertEquals("Revision history of \"User talk:Elninocavalcanti10\"", tp.getTitle());       
+        takeScreenShot();
     } 
     
     @Test
@@ -168,7 +169,7 @@ public class CasosDeTeste {
                 .setSelecLangEsp()
                 .setSaveLang();
         
-        assertThat(driver.findElement(By.tagName("h1")).getText(),containsString("Preferencias")); 
+        assertEquals("Preferencias", pp.getTitle());
         takeScreenShot();
        
 //Voltando para o idioma inglês, como solicitado na correção da fase1 deste projeto.
@@ -176,9 +177,9 @@ public class CasosDeTeste {
                 .setCliqLang()
                 .setSelecLangEng()
                 .setSaveLang();
-       
-        //assertThat(driver.findElement(By.tagName("h1")).getText(),containsString("Preferences")); 
-       //takeScreenShot(); 
+        
+        assertEquals("Preferences", pp.getTitle());
+        takeScreenShot(); 
     } 
     
     //Este teste tem um bug de mensagem após fazer a inserção do email, ele retorna uma mensagem de erro,
@@ -188,7 +189,7 @@ public class CasosDeTeste {
         MainPage mainPage = new MainPage(driver);
         
         LoginPage login = mainPage.getNavigation().goToLoginPage()
-                .setUser("elninocavalcanti10")
+                .setUser("elninocavalcanti13")
                 .setPass("pass12")
                 .setLogin();
       
@@ -197,8 +198,7 @@ public class CasosDeTeste {
                 .setPreencheEmail("acn2011@outlook.com")
                 .setChangeEmail();
      
-        assertThat(driver.findElement(By.cssSelector("#mw-changeemail-form > div.mw-htmlform-ooui-header.mw-htmlform-ooui-header-errors.oo-ui-layout.oo-ui-fieldLayout.oo-ui-fieldLayout-align-top > ul > li"))
-                .getText(),containsString("Unknown error in PHP's mail() function."));
+        assertEquals("Unknown error in PHP's mail() function.", pp.getAssertivaPP());
         takeScreenShot();
     } 
     
@@ -211,22 +211,25 @@ public class CasosDeTeste {
                 .setPass("pass12")
                 .setLogin();
       
-        DiscussionPage pp = mainPage.getNavigation().goToDiscussionPage()
+        DiscussionPage dp = mainPage.getNavigation().goToDiscussionPage()
                 .setAddTema()
                 .setPreencheTitulo("Temas novos")
                 .setConteudo("Esse é o novo tema")
                 .setSaveTema();
         
-        assertThat(driver.findElement(By.cssSelector("#mw-content-text > div > p:nth-child(1)"))
-               .getText(),containsString("Esse é o novo tema"));
+        assertEquals("Esse é o novo tema", dp.getAssertivaDP());
         takeScreenShot();
     }
-    
     
     
     //Este caso de teste requer trocar o xpath do que será oculto, pois uma vez que este teste passou,
     //o elemento está oculto. Caso queira fazer este teste passar, favor pegar o novo xpath dos itens 1 e 2 que
     //estão comentados na classe DiscussionPege.
+    
+    //Fui banido por vandalismo, segundo o mediawiki.org
+    //não tinha notado quando criei este CT na Fase1 do projeto
+    //que o mesmo acessava o mediawiki.org, e como ocultei muitos temas fui banido.
+    //A solução seria criar outro usuário no mediawiki.org para realzar este teste.
     @Test
     public void CT9OcultarTemas() {
         MainPage mainPage = new MainPage(driver);
@@ -241,9 +244,12 @@ public class CasosDeTeste {
                 .setLogin();
       
         DiscussionPage dp = mainPage.getNavigation().goToDiscussionPage()
-                .setTresPont().setOcultarTema().setMotivo("sem motivos").setaOcultar();
+                                .setTresPont()
+                                .setOcultarTema()
+                                .setMotivo("sem motivos")
+                                .setaOcultar();
        
-        assertThat(driver.findElement(By.tagName("h1")).getText(),containsString("Manual talk:FAQ"));
+        assertEquals("Manual talk:FAQ", dp.getTitle());
         takeScreenShot(); 
     }
     
@@ -261,7 +267,8 @@ public class CasosDeTeste {
                 .setPesqUser("elninocavalcanti10")
                 .setSearch();
         
-        assertThat(driver.findElement(By.tagName("h1")).getText(),containsString("User contributions"));
+        assertEquals("User contributions", cp.getTitle());
+        //assertThat(driver.findElement(By.tagName("h1")).getText(),containsString("User contributions"));
         takeScreenShot();
     }
     
