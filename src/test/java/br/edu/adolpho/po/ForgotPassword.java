@@ -24,9 +24,6 @@ public class ForgotPassword extends MediaWikiPage {
     @FindBy(xpath = "//*[@id=\"ooui-php-5\"]/button/span[2]")
     WebElement reset;
     
-    @FindBy(css = "#mw-content-text > div > form > div.mw-htmlform-ooui-header.mw-htmlform-ooui-header-errors.oo-ui-layout.oo-ui-fieldLayout.oo-ui-fieldLayout-align-top > ul > li > label")
-    WebElement assertivaFG;
-
     public ForgotPassword(WebDriver driver) {
         super(driver);
     }
@@ -48,8 +45,4 @@ public class ForgotPassword extends MediaWikiPage {
         return new ForgotPassword(driver);
     }
      
-    public String getAssertivaFG() {
-        return assertivaFG.getText();
-    }
-    
 }
