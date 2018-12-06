@@ -26,6 +26,9 @@ public class LoginPage extends MediaWikiPage{
     
     @FindBy(css = "#pt-userpage > a")
     WebElement assertiva;
+    
+    @FindBy(xpath = "//*[@id=\"userloginForm\"]/form/div[1]/div/p")
+    WebElement erroLogar;
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -50,6 +53,10 @@ public class LoginPage extends MediaWikiPage{
      
     public String getAssertiva() {
         return assertiva.getText();
+    }
+    
+    public String getErroLogar() {
+        return erroLogar.getText();
     }
     
 }

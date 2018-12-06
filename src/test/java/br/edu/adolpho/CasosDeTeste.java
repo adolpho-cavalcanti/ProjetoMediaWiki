@@ -65,41 +65,34 @@ public class CasosDeTeste {
         driver.close();
     }    
     
-    private void takeScreenShot() {
-        File sourceFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        try {
-            int scId = 0;
-            scId++;
-            FileUtils.copyFile(sourceFile, new File("./res/" + scId + ".png"));
-        } catch(IOException e) {}
-    }
     
     @Test
     public void CT1testCriarConta() {
         MainPage mainPage = new MainPage(driver);
         
-        CreateAccountPage criaConta = mainPage.getNavigation().goToCreateAccountPage()
-                                                .setUser("elninocavalcanti10")
-                                                .setPass("senha123")
-                                                .setConfirmPass("senha123")
-                                                .setCreateYourAccount();
-                                        //senha123
+        CreateAccountPage criaConta = mainPage.getNavigation().goToCreateAccountPage();
+     
+        CreateAccountPage cria = criaConta.setUser("elninocavalcanti10")
+                                          .setPass("senha123")
+                                          .setConfirmPass("senha123")
+                                          .setCreateYourAccount();
+                                        
                     
         assertEquals("Welcome, Elninocavalcanti10!", criaConta.getTitle());
-        takeScreenShot();
-    }
-    
+        
+    } 
+     
     @Test
     public void CT2testFazerLogin() {
         MainPage mainPage = new MainPage(driver);
        
-        LoginPage login = mainPage.getNavigation().goToLoginPage()
-                            .setUser("elninocavalcanti10")
-                            .setPass("senha123")
-                            .setLogin();
+        LoginPage login = mainPage.getNavigation().goToLoginPage();
+        
+        LoginPage logar = login.setUser("elninocavalcanti10")
+                               .setPass("senha123")
+                               .setLogin();
         
         assertEquals("Elninocavalcanti10", login.getAssertiva());
-        takeScreenShot();
         
     }   
     
@@ -107,15 +100,17 @@ public class CasosDeTeste {
     public void CT3testFazerLogout() {
         MainPage mainPage = new MainPage(driver);
         
-        LoginPage login = mainPage.getNavigation().goToLoginPage()
-                                        .setUser("elninocavalcanti10")
-                                        .setPass("senha123")
-                                        .setLogin();
+        LoginPage login = mainPage.getNavigation().goToLoginPage();
+        
+        LoginPage logar = login.setUser("elninocavalcanti10")
+                               .setPass("senha123")
+                               .setLogin();
+        assertEquals("Elninocavalcanti10", login.getAssertiva());
         
         Logout logout = mainPage.getNavigation().goToLogout();
         
         assertEquals("Log out", logout.getTitle());
-        takeScreenShot();
+        
         
     }    
     
@@ -129,13 +124,14 @@ public class CasosDeTeste {
         LoginPage login = mainPage.getNavigation().goToLoginPage();      
         
         //Clica no link "Forgot your password?", depois seta os valores definidos na primeira fase do projeto
-        ForgotPassword fgotPass = mainPage.getNavigation().goToForgotPassword()
-                .setUser("elninocavalcanti10")
-                .setEmail("acn2011@outlook.com")
-                .setReset();
+        ForgotPassword fgotPass = login.getNavigation().goToForgotPassword();
+        
+        ForgotPassword esqueceu = fgotPass.setUser("elninocavalcanti34")
+                                          .setEmail("acn2011@outlook.com")
+                                          .setReset();
         
         assertEquals("Reset password", fgotPass.getTitle());                
-        takeScreenShot();
+        
     }   
     
     //Lembrando que para editar o tópico é necessário ter criado o tópico previamente.
@@ -143,46 +139,53 @@ public class CasosDeTeste {
     public void CT5EditarTopicoConversa() {
         MainPage mainPage = new MainPage(driver);
         
-        LoginPage login = mainPage.getNavigation().goToLoginPage()
-                .setUser("elninocavalcanti10")
-                .setPass("senha123")
-                .setLogin();
-      
-        TalkPage tp = mainPage.getNavigation().goToTalkPage()
-                .setEditTopic()
-                .setPreencheCampo("Futebol Total")
-                .setChange()
-                .setViewHistory();
+        LoginPage login = mainPage.getNavigation().goToLoginPage();
         
-        assertEquals("Revision history of \"User talk:Elninocavalcanti13\"", tp.getTitle());       
-        takeScreenShot();
+        LoginPage logar = login.setUser("elninocavalcanti10")
+                               .setPass("senha123")
+                               .setLogin();
+        assertEquals("Elninocavalcanti10", login.getAssertiva());
+      
+        TalkPage tp = mainPage.getNavigation().goToTalkPage();
+        
+        TalkPage editar = tp.setEditTopic()
+                            .setPreencheCampo("Futebol Total")
+                            .setChange()
+                            .setViewHistory();
+        
+        assertEquals("Revision history of \"User talk:Elninocavalcanti10\"", tp.getTitle());       
+        
     } 
     
     @Test
     public void CT6MudarIdioma() {
         MainPage mainPage = new MainPage(driver);
         
-        LoginPage login = mainPage.getNavigation().goToLoginPage()
-                .setUser("elninocavalcanti10")
-                .setPass("senha123")
-                .setLogin();
+        LoginPage login = mainPage.getNavigation().goToLoginPage();
+        
+        LoginPage logar = login.setUser("elninocavalcanti10")
+                               .setPass("senha123")
+                               .setLogin();
+        assertEquals("Elninocavalcanti10", login.getAssertiva());
       
-        PreferencesPage pp = mainPage.getNavigation().goToPreferencesPage()
-                .setCliqLang()
-                .setSelecLangEsp()
-                .setSaveLang();
+        PreferencesPage pp = mainPage.getNavigation().goToPreferencesPage();
+        
+        PreferencesPage mudarIdioma = pp.setCliqLang()
+                                        .setSelecLangEsp()
+                                        .setSaveLang();
         
         assertEquals("Preferencias", pp.getTitle());
-        takeScreenShot();
+        
        
 //Voltando para o idioma inglês, como solicitado na correção da fase1 deste projeto.
-        PreferencesPage VoltarIdiomaEnglish = mainPage.getNavigation().goToPreferencesPage()
-                .setCliqLang()
-                .setSelecLangEng()
-                .setSaveLang();
+        PreferencesPage VoltarIdiomaEnglish = mainPage.getNavigation().goToPreferencesPage();
+        
+        PreferencesPage ingles = VoltarIdiomaEnglish.setCliqLang()
+                                                    .setSelecLangEng()
+                                                    .setSaveLang();
         
         assertEquals("Preferences", pp.getTitle());
-        takeScreenShot(); 
+        
     } 
     
     //Este teste tem um bug de mensagem após fazer a inserção do email, ele retorna uma mensagem de erro,
@@ -191,45 +194,49 @@ public class CasosDeTeste {
     public void CT7InserirEmailContaCadastrada() {
         MainPage mainPage = new MainPage(driver);
         
-        LoginPage login = mainPage.getNavigation().goToLoginPage()
-                .setUser("elninocavalcanti10")
-                .setPass("senha123")
-                .setLogin();
+        
+        LoginPage login = mainPage.getNavigation().goToLoginPage();
+        
+        LoginPage logar = login.setUser("elninocavalcanti10")
+                               .setPass("senha123")
+                               .setLogin();
+        assertEquals("Elninocavalcanti10", login.getAssertiva());
       
-        PreferencesPage pp = mainPage.getNavigation().goToPreferencesPage()
-                .setSetEmail()
-                .setPreencheEmail("acn2011@outlook.com")
-                .setChangeEmail();
+        PreferencesPage pp = mainPage.getNavigation().goToPreferencesPage();
+        
+        PreferencesPage inserirEmail = pp.setSetEmail()
+                                        .setPreencheEmail("acn2011@outlook.com")
+                                        .setChangeEmail();
      
         assertEquals("Unknown error in PHP's mail() function.", pp.getAssertivaPP());
-        takeScreenShot();
+        
     }
     
     @Test
     public void CT8CriarUmaDiscussão() {
         MainPage mainPage = new MainPage(driver);
         
-        LoginPage login = mainPage.getNavigation().goToLoginPage()
-                .setUser("elninocavalcanti10")
-                .setPass("senha123")
-                .setLogin();
+        LoginPage login = mainPage.getNavigation().goToLoginPage();
+        
+        LoginPage logar = login.setUser("elninocavalcanti10")
+                               .setPass("senha123")
+                               .setLogin();
+        assertEquals("Elninocavalcanti10", login.getAssertiva());
       
-        DiscussionPage dp = mainPage.getNavigation().goToDiscussionPage()
-                .setAddTema()
-                .setPreencheTitulo("Temas novos")
-                .setConteudo("Esse é o novo tema")
-                .setSaveTema();
+        DiscussionPage dp = mainPage.getNavigation().goToDiscussionPage();
+         
+        DiscussionPage criaDisc = dp.setAddTema()
+                                    .setPreencheTitulo("Temas novos")
+                                    .setConteudo("Esse é o novo tema")
+                                    .setSaveTema();
         
         assertEquals("Talk:Main Page", dp.getTitle());
-        //assertEquals("Esse é o novo tema", dp.getAssertivaDP());
-        takeScreenShot();
+        
     }
-     
     
-    //Este caso de teste requer trocar o xpath do que será oculto, pois uma vez que este teste passou,
-    //o elemento está oculto. Caso queira fazer este teste passar, favor pegar o novo xpath dos itens 1 e 2 que
-    //estão comentados na classe DiscussionPege.
     
+    /*
+    //Como acordado com o professor, este caso de teste CT09OcultarTemas foi trocado, pelo fato do mesmo acessar mediawiki.org
     //Fui banido por vandalismo, segundo o mediawiki.org
     //não tinha notado quando criei este CT na Fase1 do projeto
     //que o mesmo acessava o mediawiki.org, e como ocultei muitos temas fui banido.
@@ -254,25 +261,43 @@ public class CasosDeTeste {
                                 .setaOcultar();
        
         assertEquals("Manual talk:FAQ", dp.getTitle());
-        takeScreenShot(); 
-    }
+         
+    }*/
     
+    @Test
+    public void CT9ErroAoFazerLogin() {
+        MainPage mainPage = new MainPage(driver);
+       
+        LoginPage login = mainPage.getNavigation().goToLoginPage();
+        
+        LoginPage logar = login.setUser("messi123")
+                               .setPass("senha1")
+                               .setLogin();
+        
+        assertEquals("Incorrect username or password entered. Please try again.", login.getErroLogar());
+        
+        
+    }   
     
+   
     @Test
     public void CT10PesquisarContribuicoes() {
         MainPage mainPage = new MainPage(driver);
         
-        LoginPage login = mainPage.getNavigation().goToLoginPage()
-                .setUser("elninocavalcanti10")
-                .setPass("senha123")
-                .setLogin();
+        LoginPage login = mainPage.getNavigation().goToLoginPage();
+        
+        LoginPage logar = login.setUser("elninocavalcanti10")
+                               .setPass("senha123")
+                               .setLogin();
+        assertEquals("Elninocavalcanti10", login.getAssertiva());
       
-        ContributionsPage cp = mainPage.getNavigation().goToContributionsPage()
-                .setPesqUser("elninocavalcanti10")
-                .setSearch();
+        ContributionsPage cp = mainPage.getNavigation().goToContributionsPage();
+         
+        ContributionsPage pesquisar = cp.setPesqUser("elninocavalcanti10")
+                                        .setSearch();
         
         assertEquals("User contributions", cp.getTitle());
-        takeScreenShot();
+        
     }
     
 }
